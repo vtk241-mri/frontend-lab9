@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 6</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="notificationContainer" class="notification-container"></div>
+    <button onclick="notifier.createNotification('Успіх!', 'success')">
+      Створити успішне сповіщення
+    </button>
+    <button onclick="notifier.createNotification('Помилка!', 'error')">
+      Створити сповіщення помилки
+    </button>
+    <button onclick="notifier.createNotification('Попередження!', 'warning')">
+      Створити попередження
+    </button>
+    <button onclick="notifier.createNotification('Інформація!', 'info')">
+      Створити інформаційне сповіщення
+    </button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
