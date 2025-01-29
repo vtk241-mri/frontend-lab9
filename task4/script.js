@@ -56,15 +56,10 @@ class Form {
 
     Array.from(this.form.elements).forEach((element) => {
       if (element.type !== "submit") {
-        const errorMessage =
-          element.parentElement.querySelector(".error-message");
-        if (!element.checkValidity()) {
-          errorMessage.innerText = `Поле ${element.name} не заповнене коректно`;
+        if (!this.validateField(element)) 
           isValid = false;
-        } else {
-          errorMessage.innerText = "";
+        else 
           formData[element.name] = element.value;
-        }
       }
     });
 
@@ -73,6 +68,17 @@ class Form {
     }
   }
 
+  validateField(element) {
+    const errorMessage = element.parentElement.querySelector(".error-message");
+    if (!element.checkValidity()) {
+      errorMessage.innerText = `Поле ${element.name} не заповнене коректно`;
+      return false;
+    } else {
+      errorMessage.innerText = "";
+      return true;
+    }
+  }
+  
   processFormData(data) {
     console.log("Дані форми:", data);
     alert("Форма відправлена успішно!");
