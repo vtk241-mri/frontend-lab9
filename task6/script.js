@@ -13,18 +13,17 @@ class Notification {
     notification.className = `notification ${type}`;
     notification.innerHTML = `
             <span>${message}</span>
-            <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+            <button class="close-btn">×</button>
         `;
+
+    const closeButton = notification.querySelector(".close-btn");
+    closeButton.addEventListener("click", () => notification.remove());
 
     this.container.appendChild(notification);
 
     if (autoClose) {
-      setTimeout(() => {
-        notification.remove();
-      }, duration);
+      setTimeout(() => notification.remove(), duration);
     }
-
-    notification.addEventListener("click", () => notification.remove());
   }
 }
 
