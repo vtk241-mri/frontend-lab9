@@ -99,4 +99,9 @@ const form = new Form(formContainer, [
     placeholder: "Введіть пароль",
     required: true,
   },
+  {
+    label: "asd",
+    name: "radio",
+    type: "radio",
+  },
 ]);
