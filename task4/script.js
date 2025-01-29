@@ -21,21 +21,25 @@ class Form {
     input.required = field.required || false;
     return input;
   }
+  createLabel(text) {
+    const label = document.createElement("label");
+    label.innerText = text;
+    return label;
+  }
+
+  createErrorMessage() {
+    const errorMessage = document.createElement("span");
+    errorMessage.className = "error-message";
+    return errorMessage;
+  }
 
   addField(field) {
     const formGroup = document.createElement("div");
     formGroup.className = "form-group";
 
-    const label = document.createElement("label");
-    label.innerText = field.label;
-    formGroup.appendChild(label);
-
-    const input = this.createInput(field);
-    formGroup.appendChild(input);
-
-    const errorMessage = document.createElement("span");
-    errorMessage.className = "error-message";
-    formGroup.appendChild(errorMessage);
+    formGroup.appendChild(this.createLabel(field.label));
+    formGroup.appendChild(this.createInput(field));
+    formGroup.appendChild(this.createErrorMessage());
 
     this.form.appendChild(formGroup);
   }
@@ -48,6 +52,10 @@ class Form {
     this.form.appendChild(submitButton);
   }
 
+  getFormElements() {
+    return Array.from(this.form.elements).filter((el) => el.type !== "submit");
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -56,10 +64,8 @@ class Form {
 
     Array.from(this.form.elements).forEach((element) => {
       if (element.type !== "submit") {
-        if (!this.validateField(element)) 
-          isValid = false;
-        else 
-          formData[element.name] = element.value;
+        if (!this.validateField(element)) isValid = false;
+        else formData[element.name] = element.value;
       }
     });
 
@@ -78,7 +84,7 @@ class Form {
       return true;
     }
   }
-  
+
   processFormData(data) {
     console.log("Дані форми:", data);
     alert("Форма відправлена успішно!");
