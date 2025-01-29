@@ -2,25 +2,29 @@ class Modal {
   constructor() {
     this.modal = document.createElement("div");
     this.modal.className = "modal";
+    
+    this.createHeader();
+    this.createBody();
+    this.addCloseButton();
+    this.initDrag();
+  }
 
+  createHeader() {
     this.header = document.createElement("div");
     this.header.className = "modal-header";
     this.header.textContent = "Модальне вікно";
+  }
 
+  createBody() {
+    this.body = document.createElement("div");
+    this.body.className = "modal-body";
+  }
+
+  addCloseButton() {
     this.closeButton = document.createElement("span");
     this.closeButton.className = "modal-close";
     this.closeButton.textContent = "×";
     this.closeButton.onclick = () => this.close();
-
-    this.body = document.createElement("div");
-    this.body.className = "modal-body";
-
-    this.header.appendChild(this.closeButton);
-    this.modal.appendChild(this.header);
-    this.modal.appendChild(this.body);
-    document.body.appendChild(this.modal);
-
-    this.initDrag();
   }
 
   open(content) {
