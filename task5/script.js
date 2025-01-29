@@ -12,18 +12,28 @@ class Tab {
     this.tabs = [];
   }
 
-  addTab(title, content) {
-    const tabIndex = this.tabs.length;
-
+  createTabButton(title, index) {
     const tabButton = document.createElement("button");
     tabButton.className = "tab-button";
     tabButton.innerText = title;
-    tabButton.addEventListener("click", () => this.switchTab(tabIndex));
-    this.tabButtons.appendChild(tabButton);
+    tabButton.addEventListener("click", () => this.switchTab(index));
+    return tabButton;
+  }
 
+  createTabContent(content) {
     const tabContent = document.createElement("div");
     tabContent.className = "tab-content";
     tabContent.innerHTML = content;
+    return tabContent;
+  }
+
+  addTab(title, content) {
+    const tabIndex = this.tabs.length;
+
+    const tabButton = this.createTabButton(title, tabIndex);
+    const tabContent = this.createTabContent(content);
+
+    this.tabButtons.appendChild(tabButton);
     this.tabContents.appendChild(tabContent);
 
     this.tabs.push({ button: tabButton, content: tabContent });
@@ -35,13 +45,8 @@ class Tab {
 
   switchTab(index) {
     this.tabs.forEach((tab, i) => {
-      if (i === index) {
-        tab.button.classList.add("active");
-        tab.content.classList.add("active");
-      } else {
-        tab.button.classList.remove("active");
-        tab.content.classList.remove("active");
-      }
+      tab.button.classList.toggle("active", i === index);
+      tab.content.classList.toggle("active", i === index);
     });
   }
 }
