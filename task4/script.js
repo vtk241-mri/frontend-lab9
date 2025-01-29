@@ -13,6 +13,15 @@ class Form {
     this.container.appendChild(this.form);
   }
 
+  createInput(field) {
+    const input = document.createElement("input");
+    input.type = field.type || "text";
+    input.name = field.name;
+    input.placeholder = field.placeholder || "";
+    input.required = field.required || false;
+    return input;
+  }
+
   addField(field) {
     const formGroup = document.createElement("div");
     formGroup.className = "form-group";
@@ -21,12 +30,7 @@ class Form {
     label.innerText = field.label;
     formGroup.appendChild(label);
 
-    const input = document.createElement("input");
-    input.type = field.type || "text";
-    input.name = field.name;
-    input.placeholder = field.placeholder || "";
-    input.required = field.required || false;
-
+    const input = this.createInput(field);
     formGroup.appendChild(input);
 
     const errorMessage = document.createElement("span");
@@ -98,10 +102,5 @@ const form = new Form(formContainer, [
     type: "password",
     placeholder: "Введіть пароль",
     required: true,
-  },
-  {
-    label: "asd",
-    name: "radio",
-    type: "radio",
   },
 ]);
