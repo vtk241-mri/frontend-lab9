@@ -19,19 +19,22 @@ class Modal {
     this.modal.appendChild(this.header);
     this.modal.appendChild(this.body);
     document.body.appendChild(this.modal);
-
-    this.initDrag();
   }
 
   open(content) {
-    this.body.innerHTML = content;
+    this.setContent(content);
     this.modal.style.display = "block";
     this.modal.style.left = "50%";
     this.modal.style.top = "50%";
     this.modal.style.transform = "translate(-50%, -50%)";
   }
 
-  close() {
+  setContent(content) {
+    this.body.innerHTML = content;
+  }
+}
+
+close() {
     this.modal.style.display = "none";
   }
 
