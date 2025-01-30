@@ -44,9 +44,13 @@ class Slider {
     if (this.direction === "vertical") {
       this.track.style.flexDirection = "column";
       this.container.classList.add("vertical");
+      // Добавлена настройка для вертикального слайдера
+      this.container.classList.remove("horizontal");
     } else {
       this.track.style.flexDirection = "row";
       this.container.classList.remove("vertical");
+      // Добавлена настройка для горизонтального слайдера
+      this.container.classList.add("horizontal");
     }
   }
 
