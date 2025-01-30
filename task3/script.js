@@ -41,15 +41,18 @@ class Table {
 
   addColumn(headerName) {
     this.headers.push(headerName);
-    const th = document.createElement("th");
-    th.innerText = headerName;
-    this.table.querySelector("thead tr").appendChild(th);
+    this.updateHeader(headerName);
+    this.updateRows();
+  }
 
+  updateHeader(headerName) {
+    const th = this.createElement("th", null, headerName);
+    this.table.querySelector("thead tr").appendChild(th);
+  }
+
+  updateRows() {
     const rows = this.table.querySelectorAll("tbody tr");
-    rows.forEach((row) => {
-      const cell = document.createElement("td");
-      row.appendChild(cell);
-    });
+    rows.forEach(row => row.appendChild(this.createElement("td")));
   }
 }
 
