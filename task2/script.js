@@ -9,26 +9,8 @@ class Slider {
     this.track.className = "slider-track";
     this.container.appendChild(this.track);
 
-    this.createControls();
-  }
-
-  createControls() {
-    const controls = document.createElement("div");
-    controls.className = "slider-controls";
-
-    const prevButton = document.createElement("button");
-    prevButton.className = "slider-button";
-    prevButton.innerHTML = "&#10094;";
-    prevButton.onclick = () => this.prevSlide();
-
-    const nextButton = document.createElement("button");
-    nextButton.className = "slider-button";
-    nextButton.innerHTML = "&#10095;";
-    nextButton.onclick = () => this.nextSlide();
-
-    controls.appendChild(prevButton);
-    controls.appendChild(nextButton);
-    this.container.appendChild(controls);
+    this.ui = new SliderUI(this);
+    this.navigator = new SliderNavigator(this);
   }
 
   addSlide(content) {
@@ -50,30 +32,71 @@ class Slider {
     }
   }
 
+  updateSlidePosition() {
+    const offset =
+      this.direction === "vertical"
+        ? this.container.clientHeight
+        : this.container.clientWidth;
+
+    this.track.style.transform =
+      this.direction === "vertical"
+        ? `translateY(-${this.currentSlide * offset}px)`
+        : `translateX(-${this.currentSlide * offset}px)`;
+  }
+}
+
+class SliderUI {
+  constructor(slider) {
+    this.slider = slider;
+    this.createControls();
+  }
+
+  createControls() {
+    const controls = document.createElement("div");
+    controls.className = "slider-controls";
+
+    const prevButton = this.createButton("&#10094;", () =>
+      this.slider.navigator.prevSlide()
+    );
+    const nextButton = this.createButton("&#10095;", () =>
+      this.slider.navigator.nextSlide()
+    );
+
+    controls.appendChild(prevButton);
+    controls.appendChild(nextButton);
+    this.slider.container.appendChild(controls);
+  }
+
+  createButton(innerHtml, action) {
+    const button = document.createElement("button");
+    button.className = "slider-button";
+    button.innerHTML = innerHtml;
+    button.onclick = action;
+    return button;
+  }
+}
+
+class SliderNavigator {
+  constructor(slider) {
+    this.slider = slider;
+  }
+
   nextSlide() {
-    if (this.currentSlide < this.slides.length - 1) {
-      this.currentSlide++;
+    if (this.slider.currentSlide < this.slider.slides.length - 1) {
+      this.slider.currentSlide++;
     } else {
-      this.currentSlide = 0;
+      this.slider.currentSlide = 0;
     }
-    this.updateSlidePosition();
+    this.slider.updateSlidePosition();
   }
 
   prevSlide() {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
+    if (this.slider.currentSlide > 0) {
+      this.slider.currentSlide--;
     } else {
-      this.currentSlide = this.slides.length - 1;
+      this.slider.currentSlide = this.slider.slides.length - 1;
     }
-    this.updateSlidePosition();
-  }
-
-  updateSlidePosition() {
-    if (this.direction === "vertical") {
-      this.track.style.transform = `translateY(-${this.currentSlide * 100}%)`;
-    } else {
-      this.track.style.transform = `translateX(-${this.currentSlide * 100}%)`;
-    }
+    this.slider.updateSlidePosition();
   }
 }
 
